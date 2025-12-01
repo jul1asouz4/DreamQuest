@@ -1,0 +1,88 @@
+﻿@model IEnumerable<DreamQuest.Models.Voo>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Destinos";
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary">✈️ Destinos Disponíveis</h2>
+            <p class="text-muted">Explora os nossos voos e marca a tua próxima viagem.</p>
+        </div>
+
+        @if (userRole == "Administrador")
+        {
+            <a asp-action="Criar" class="btn btn-primary shadow">
+                ✚ Novo Voo
+            </a>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info shadow-sm border-0">
+            <h5 class="alert-heading">Sem voos disponíveis.</h5>
+            <p class="mb-0">Novas rotas serão adicionadas em breve!</p>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow border-0">
+            <div class="card-body p-0">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="ps-4">Companhia</th>
+                            <th>Origem</th>
+                            <th>Destino</th>
+                            <th>Data</th>
+                            <th>Lugares</th>
+                            <th>Preço</th>
+                            <th class="text-end pe-4">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark">@item.CompanhiaAerea</td>
+                                <td><span class="badge bg-white text-dark border">@item.Origem</span></td>
+                                <td><span class="badge bg-white text-dark border">@item.Destino</span></td>
+                                <td>@item.DataHoraPartida.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>
+                                    @if (item.LugaresDisponiveis > 5)
+                                    {
+                                        <span class="badge bg-success">@item.LugaresDisponiveis</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Últimos @item.LugaresDisponiveis!</span>
+                                    }
+                                </td>
+                                <td class="fw-bold text-primary">@item.Preco.ToString("C")</td>
+                                <td class="text-end pe-4">
+                                    @if (userRole == "Administrador")
+                                    {
+                                        <a asp-action="Editar" asp-route-id="@item.VooId" class="btn btn-sm btn-outline-warning me-1">✏️</a>
+                                        <a asp-action="Apagar" asp-route-id="@item.VooId" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                    }
+
+                                    @if (userRole == "Passageiro")
+                                    {
+                                        <a asp-action="Reservar" asp-route-id="@item.VooId" class="btn btn-sm btn-success shadow-sm">
+                                            Reservar 🎟️
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

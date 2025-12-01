@@ -1,0 +1,63 @@
+﻿@model DreamQuest.Models.Voo
+
+@{
+    ViewData["Title"] = "Editar Voo";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-warning text-dark py-3">
+                    <h4 class="mb-0 fw-bold">✏️ Editar Voo</h4>
+                </div>
+                <div class="card-body p-4 bg-light">
+                    <form asp-action="Editar">
+                        <input type="hidden" asp-for="VooId" /> <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CompanhiaAerea" class="form-label fw-bold">Companhia</label>
+                                <input asp-for="CompanhiaAerea" class="form-control" />
+                                <span asp-validation-for="CompanhiaAerea" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="LugaresDisponiveis" class="form-label fw-bold">Lugares</label>
+                                <input asp-for="LugaresDisponiveis" class="form-control" type="number" />
+                                <span asp-validation-for="LugaresDisponiveis" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Origem" class="form-label fw-bold">Origem</label>
+                                <input asp-for="Origem" class="form-control" />
+                                <span asp-validation-for="Origem" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Destino" class="form-label fw-bold">Destino</label>
+                                <input asp-for="Destino" class="form-control" />
+                                <span asp-validation-for="Destino" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DataHoraPartida" class="form-label fw-bold">Data/Hora</label>
+                                <input asp-for="DataHoraPartida" class="form-control" />
+                                <span asp-validation-for="DataHoraPartida" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Preco" class="form-label fw-bold">Preço (€)</label>
+                                <input asp-for="Preco" class="form-control" type="text" /> <span asp-validation-for="Preco" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-warning btn-lg shadow-sm fw-bold">Guardar Alterações</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

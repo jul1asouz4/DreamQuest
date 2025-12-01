@@ -1,0 +1,35 @@
+﻿@model DreamQuest.Models.Voo
+
+@{
+    ViewData["Title"] = "Apagar Voo";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white py-3">
+                    <h4 class="mb-0 fw-bold">🗑️ Tem a certeza?</h4>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <p class="lead">Está prestes a remover permanentemente este voo:</p>
+
+                    <div class="alert alert-light border">
+                        <h3 class="text-primary fw-bold">@Model.Origem ➝ @Model.Destino</h3>
+                        <p class="mb-1"><strong>Companhia:</strong> @Model.CompanhiaAerea</p>
+                        <p class="mb-0"><strong>Data:</strong> @Model.DataHoraPartida.ToString("dd/MM/yyyy HH:mm")</p>
+                    </div>
+
+                    <p class="text-danger fw-bold small">⚠️ Esta ação não pode ser revertida.</p>
+
+                    <form asp-action="Apagar" class="mt-4">
+                        <input type="hidden" asp-for="VooId" />
+                        <button type="submit" class="btn btn-danger btn-lg px-5 shadow-sm">Sim, Apagar</button>
+                        <br />
+                        <a asp-action="Index" class="btn btn-link text-secondary mt-2">Cancelar e Voltar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

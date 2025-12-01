@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Início";
+    // Tenta ler os dados da sessão
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+}
+
+@if (userRole == "Administrador")
+{
+    <div class="container mt-4 fade-in">
+        <div class="d-flex justify-content-between align-items-center mb-4 p-4 bg-white rounded shadow-sm border-start border-5 border-primary">
+            <div>
+                <h2 class="fw-bold text-primary mb-0">Painel de Gestão</h2>
+                <p class="text-muted mb-0">Bem-vindo, Administrador.</p>
+            </div>
+            <a asp-controller="Voos" asp-action="Criar" class="btn btn-primary btn-lg shadow">
+                ✚ Novo Voo
+            </a>
+        </div>
+        <div class="alert alert-info">Aceda ao <a asp-controller="Voos" asp-action="Index">Catálogo</a> para gerir os voos.</div>
+    </div>
+}
+else if (userRole == "Passageiro")
+{
+    <div class="text-center mt-5">
+        <h1 class="display-4 fw-bold text-primary">Olá, @userName! 👋</h1>
+        <p class="lead text-secondary">Pronto para levantar voo?</p>
+
+        <div class="row mt-5 justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow-sm p-4 border-0 h-100">
+                    <h3 class="text-primary">✈️ Novos Destinos</h3>
+                    <p>Descobre os voos que adicionámos recentemente.</p>
+                    <a asp-controller="Voos" asp-action="Index" class="btn btn-primary w-100">Ver Catálogo</a>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card shadow-sm p-4 border-0 h-100">
+                    <h3 class="text-success">🌍 As Tuas Viagens</h3>
+                    <p>Consulta os bilhetes que já reservaste.</p>
+                    <a asp-controller="Voos" asp-action="MinhasReservas" class="btn btn-outline-success w-100">Minhas Viagens</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center mt-5">
+        <h1 class="display-3 fw-bold text-dark">DreamQuest</h1>
+        <p class="lead text-secondary">Não viaje apenas. Viva o sonho.</p>
+
+        <div class="my-5">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+                 alt="Destino de Sonho"
+                 class="img-fluid rounded-circle shadow-lg"
+                 style="max-height: 350px; width: 350px; object-fit: cover; border: 5px solid #fff;">
+        </div>
+
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mt-4">
+            <a asp-controller="Voos" asp-action="Index" class="btn btn-primary btn-lg px-5">Ver Destinos</a>
+            <a asp-controller="Conta" asp-action="Registar" class="btn btn-secondary btn-lg px-5">Criar Conta</a>
+        </div>
+    </div>
+}
